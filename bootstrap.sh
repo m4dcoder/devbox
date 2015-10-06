@@ -5,7 +5,7 @@ if [ `uname` != "Linux" ]; then
     exit 1
 fi
 
-DEVKIT="python-pip build-essential python-virtualenv python-dev git make"
+DEVKIT="python-pip build-essential python-virtualenv python-dev git make vim"
 TOOLS="htop man manpages screen realpath"
 
 apt-get -y update
