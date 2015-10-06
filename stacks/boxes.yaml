@@ -1,0 +1,13 @@
+---
+# Defaults can be defined and reused with YAML anchors
+defaults: &defaults
+  memory: 2048
+  cpus: 2
+  box: ubuntu
+  mounts:
+    - "/dock:~/Documents/Dock"
+krypton:
+  <<: *defaults
+  hostname: krypton
+  private_networks:
+    - 172.168.75.50
