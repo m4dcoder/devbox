@@ -132,7 +132,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
         end
       end
 
-      n.vm.provision :shell, :path => "bootstrap.sh"
+      if config.has_key?('provisions')
+        config['provisions'].each do |script|
+          n.vm.provision :shell, :path => script
+        end
+      end
+
     end
   end
 end

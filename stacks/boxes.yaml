@@ -6,8 +6,18 @@ defaults: &defaults
   box: ubuntu
   mounts:
     - "/dock:~/Documents/Dock"
+  provisions:
+    - "bootstrap.sh"
 krypton:
   <<: *defaults
   hostname: krypton
   private_networks:
     - 172.168.75.50
+gotham:
+  <<: *defaults
+  hostname: gotham
+  private_networks:
+    - 172.168.75.51
+  provisions:
+    - "bootstrap-st2express.sh"
+
