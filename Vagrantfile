@@ -108,7 +108,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
     vagrant.vm.define node do |n|
       n.vm.box            = config['box']
       n.vm.box_url        = config['box_url']
-      n.vm.hostname       = config['hostname']
       n.ssh.forward_agent = config['ssh']['forward_agent'] || true
       n.ssh.pty           = config['ssh']['pty'] || false
 
@@ -116,6 +115,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
         virtualbox.name   = config['hostname'].upcase
         virtualbox.memory = config['memory'].to_i
         virtualbox.cpus   = config['cpus'].to_i
+      end
+
+      if config.has_key?('hostname')
+        n.vm.hostname = config['hostname'].downcase
       end
 
       if config.has_key?('private_networks')

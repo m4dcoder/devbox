@@ -15,7 +15,6 @@ krypton:
     - 172.168.75.50
 gotham:
   <<: *defaults
-  hostname: gotham
   private_networks:
     - 172.168.75.51
   provisions:
