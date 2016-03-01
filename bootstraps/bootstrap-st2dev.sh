@@ -6,7 +6,7 @@ if [ `uname` != "Linux" ]; then
 fi
 
 GITKIT="git git-review"
-DEVKIT="python-pip build-essential python-virtualenv python-dev make vim"
+DEVKIT="python-pip build-essential python-virtualenv python-dev python-tox make vim"
 ST2KIT="libffi-dev libssl-dev"
 TOOLS="htop man manpages screen realpath"
 SERVICES="rabbitmq-server postgresql apache2-utils nginx"
