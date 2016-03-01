@@ -5,12 +5,13 @@ if [ `uname` != "Linux" ]; then
     exit 1
 fi
 
-DEVKIT="python-pip build-essential python-virtualenv python-dev git make vim"
+GITKIT="git git-review"
+DEVKIT="python-pip build-essential python-virtualenv python-dev make vim"
 TOOLS="htop man manpages screen realpath"
 SERVICES="mongodb-server rabbitmq-server postgresql apache2-utils nginx"
 
 apt-get -y update
 apt-get -y dist-upgrade
-apt-get -y install ${DEVKIT} ${TOOLS} ${SERVICES}
+apt-get -y install ${GITKIT} ${DEVKIT} ${TOOLS} ${SERVICES}
 apt-get clean all
 apt-get autoremove
