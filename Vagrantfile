@@ -39,7 +39,7 @@ DIR = Pathname.new(__FILE__).dirname
 ## CI containers, and clean-room packaging environment)
 
 BOXES = {
-    :ubuntu => 'ubuntu-14-04-dev-x86_64'
+    :ubuntu => 'ubuntu/trusty64'
 }   
 
 BOXPATHS = {
@@ -112,7 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
       n.ssh.pty           = config['ssh']['pty'] || false
 
       n.vm.provider 'virtualbox' do |virtualbox|
-        virtualbox.name   = config['hostname'].upcase
+        virtualbox.name   = node.upcase
         virtualbox.memory = config['memory'].to_i
         virtualbox.cpus   = config['cpus'].to_i
       end

@@ -7,7 +7,14 @@ defaults: &defaults
   mounts:
     - "/dock:~/Documents/Dock"
   provisions:
-    - "bootstrap.sh"
+    - "./bootstraps/bootstrap.sh"
+arkham:
+  <<: *defaults
+  hostname: arkham
+  private_networks:
+    - 172.168.50.50
+  provisions:
+    - "./bootstraps/bootstrap-st2dev.sh"
 krypton:
   <<: *defaults
   hostname: krypton
@@ -18,5 +25,4 @@ gotham:
   private_networks:
     - 172.168.75.51
   provisions:
-    - "bootstrap-st2express.sh"
-
+    - "./bootstraps/bootstrap-st2express.sh"

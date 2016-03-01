@@ -6,4 +6,5 @@ if [ `uname` != "Linux" ]; then
 fi
 
 sudo rm -rf /opt/puppet
-curl -sSL https://stackstorm.com/install.sh | sudo sh
+
+curl -sSL https://install.stackstorm.com/ | sudo sh
