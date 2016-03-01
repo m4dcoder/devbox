@@ -18,6 +18,9 @@ apt-get -y install ${TOOLS} ${SERVICES}
 apt-get clean all
 apt-get autoremove
 
+# Upgrade pip version on root
+easy_install -U pip
+
 # MongoDB 3.x
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
