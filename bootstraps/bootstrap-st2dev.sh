@@ -8,10 +8,16 @@ fi
 GITKIT="git git-review"
 DEVKIT="python-pip build-essential python-virtualenv python-dev make vim"
 TOOLS="htop man manpages screen realpath"
-SERVICES="mongodb-server rabbitmq-server postgresql apache2-utils nginx"
+SERVICES="rabbitmq-server postgresql apache2-utils nginx"
 
 apt-get -y update
 apt-get -y dist-upgrade
 apt-get -y install ${GITKIT} ${DEVKIT} ${TOOLS} ${SERVICES}
 apt-get clean all
 apt-get autoremove
+
+# MongoDB 3.x
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+apt-get -y update
+apt-get install -y mongodb-org
