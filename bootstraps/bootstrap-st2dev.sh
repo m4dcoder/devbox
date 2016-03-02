@@ -7,7 +7,7 @@ fi
 
 DEVKIT="git git-review build-essential make vim"
 PYDEVKIT="python-pip python-virtualenv python-dev python3-dev python-tox"
-ST2KIT="libffi-dev libssl-dev"
+ST2KIT="libffi-dev libssl-dev libpq-dev"
 TOOLS="htop man manpages screen realpath"
 SERVICES="rabbitmq-server postgresql apache2-utils nginx"
 
