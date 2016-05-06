@@ -25,3 +25,6 @@ gotham:
   hostname: gotham
   private_networks:
     - 172.168.75.51
+  provisions:
+    - "./bootstraps/bootstrap.sh"
+    - "./bootstraps/bootstrap-st2.sh"
