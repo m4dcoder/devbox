@@ -18,6 +18,12 @@ apt-get -y install ${TOOLS} ${SERVICES}
 apt-get clean all
 apt-get autoremove
 
+# Setup rabbitmqadmin
+rabbitmq-plugins enable rabbitmq_management
+service rabbitmq-server restart
+curl -sS -o /usr/bin/rabbitmqadmin http://127.0.0.1:15672/cli/rabbitmqadmin
+chmod 755 /usr/bin/rabbitmqadmin
+
 # MongoDB 3.x
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
