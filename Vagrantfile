@@ -38,14 +38,6 @@ DIR = Pathname.new(__FILE__).dirname
 ## Vagrant to act as a fixture in an environment (to build containers, act as
 ## CI containers, and clean-room packaging environment)
 
-BOXES = {
-    :ubuntu => 'ubuntu/trusty64'
-}   
-
-BOXPATHS = {
-    :ubuntu => 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box',
-}
-
 module Vagrant
   class Stack
     require 'yaml'
@@ -63,8 +55,7 @@ module Vagrant
         'memory'    => ENV['memory'] || 2048,
         'cpus'      => ENV['cpus'] || 2,
         'hostname'  => ENV['hostname'] || 'olympus',
-        'box'       => ENV['box'].nil? ? BOXES[:ubuntu] : BOXES[ENV['box'].to_sym],
-        'box_url'   => ENV['box'].nil? ? BOXPATHS[:ubuntu] : BOXPATHS[ENV['box'].to_sym],
+        'box'       => ENV['box'] || 'ubuntu/trusty64',
         'sync_type' => ENV['sync_type'] || 'rsync',
         'ssh'       => {
           'pty'           => false,
@@ -107,7 +98,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
   @stack.servers.each do |node, config|
     vagrant.vm.define node do |n|
       n.vm.box            = config['box']
-      n.vm.box_url        = config['box_url']
       n.ssh.forward_agent = config['ssh']['forward_agent'] || true
       n.ssh.pty           = config['ssh']['pty'] || false
 

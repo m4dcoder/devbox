@@ -1,0 +1,8 @@
+# Download vagrant boxes
+vagrant box add ubuntu/trusty64
+vagrant box add centos/7
+
+# Install virtualbox guest additions
+sudo mkdir -p /media/VirtualBoxGuestAdditions
+sudo mount -t iso9660 -o loop /vagrant/VBoxGuestAdditions.iso /media/VirtualBoxGuestAdditions/
+sudo /media/VirtualBoxGuestAdditions/VBoxLinuxAdditions.run

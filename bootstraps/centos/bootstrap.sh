@@ -5,14 +5,15 @@ if [ `uname` != "Linux" ]; then
     exit 1
 fi
 
-DEVKIT="python-pip build-essential python-virtualenv python-dev git make vim"
+DEVKIT="gcc-c++ git-all make vim"
+PYDEVKIT="python-pip python-virtualenv python-devel python3-devel python-tox"
 TOOLS="htop man manpages screen realpath"
 
-apt-get -y update
-apt-get -y dist-upgrade
-apt-get -y install ${DEVKIT} ${TOOLS}
-apt-get clean all
-apt-get autoremove
+yum update -y
+yum install -y epel-release
+yum install -y ${DEVKIT} ${PYDEVKIT} ${TOOLS}
+easy_install -U pip
+pip install virtualenv --upgrade
 
 VIMRC_FILE=~/.vimrc
 cat <<VIMRC_OPTS >$VIMRC_FILE

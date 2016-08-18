@@ -3,28 +3,32 @@
 defaults: &defaults
   memory: 2048
   cpus: 2
-  box: ubuntu
-  mounts:
-    - "/dock:~/Documents/Dock"
-  provisions:
-    - "./bootstraps/bootstrap.sh"
+  box: "ubuntu/trusty64"
 arkham:
   <<: *defaults
   hostname: arkham
   private_networks:
     - 172.168.50.50
+  mounts:
+    - "/dock:~/Documents/Dock"
   provisions:
-    - "./bootstraps/bootstrap-st2dev.sh"
-krypton:
-  <<: *defaults
-  hostname: krypton
-  private_networks:
-    - 172.168.75.50
+    - "./bootstraps/ubuntu/bootstrap.sh"
+    - "./bootstraps/ubuntu/bootstrap-st2dev.sh"
 gotham:
   <<: *defaults
   hostname: gotham
   private_networks:
     - 172.168.75.51
+  mounts:
+    - "/dock:~/Documents/Dock"
   provisions:
-    - "./bootstraps/bootstrap.sh"
-    - "./bootstraps/bootstrap-st2.sh"
+    - "./bootstraps/ubuntu/bootstrap.sh"
+    - "./bootstraps/ubuntu/bootstrap-st2.sh"
+krypton:
+  <<: *defaults
+  hostname: krypton
+  box: "centos/7"
+  private_networks:
+    - 172.168.75.52
+  provisions:
+    - "./bootstraps/centos/bootstrap.sh"

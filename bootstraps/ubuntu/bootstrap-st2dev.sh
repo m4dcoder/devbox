@@ -5,18 +5,10 @@ if [ `uname` != "Linux" ]; then
     exit 1
 fi
 
-DEVKIT="git git-review build-essential make vim"
-PYDEVKIT="python-pip python-virtualenv python-dev python3-dev python-tox"
 ST2KIT="libffi-dev libssl-dev libpq-dev"
-TOOLS="htop man manpages screen realpath"
 SERVICES="rabbitmq-server postgresql apache2-utils nginx"
 
-apt-get -y update
-apt-get -y dist-upgrade
-apt-get -y install ${DEVKIT} ${PYDEVKIT} ${ST2KIT}
-apt-get -y install ${TOOLS} ${SERVICES}
-apt-get clean all
-apt-get autoremove
+apt-get -y install ${ST2KIT} ${SERVICES}
 
 # Setup rabbitmqadmin
 rabbitmq-plugins enable rabbitmq_management
