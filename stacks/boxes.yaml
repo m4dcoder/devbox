@@ -23,6 +23,7 @@ gotham:
     - "/dock:~/Documents/Dock"
   provisions:
     - "./bootstraps/ubuntu/bootstrap.sh"
+    - "./bootstraps/ubuntu/bootstrap-docker.sh"
 krypton:
   <<: *defaults
   hostname: krypton
