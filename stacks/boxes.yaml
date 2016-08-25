@@ -23,7 +23,6 @@ gotham:
     - "/dock:~/Documents/Dock"
   provisions:
     - "./bootstraps/ubuntu/bootstrap.sh"
-    - "./bootstraps/ubuntu/bootstrap-st2.sh"
 krypton:
   <<: *defaults
   hostname: krypton
@@ -32,3 +31,4 @@ krypton:
     - 172.168.75.52
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
+    - "./bootstraps/centos/bootstrap-st2.sh"
