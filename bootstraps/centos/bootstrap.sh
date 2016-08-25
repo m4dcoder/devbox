@@ -7,7 +7,7 @@ fi
 
 DEVKIT="gcc-c++ git-all make vim"
 PYDEVKIT="python-pip python-virtualenv python-devel python3-devel python-tox"
-TOOLS="htop man manpages screen realpath"
+TOOLS="curl htop man manpages screen realpath wget"
 
 yum update -y
 yum install -y epel-release

@@ -7,7 +7,7 @@ fi
 
 DEVKIT="git git-review build-essential make vim"
 PYDEVKIT="python-pip python-virtualenv python-dev python3-dev python-tox"
-TOOLS="htop man manpages screen realpath"
+TOOLS="curl htop man manpages screen realpath wget"
 
 apt-get -y update
 apt-get -y dist-upgrade
