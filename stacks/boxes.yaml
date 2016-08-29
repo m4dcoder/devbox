@@ -33,3 +33,12 @@ krypton:
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
     - "./bootstraps/centos/bootstrap-st2.sh"
+kandor:
+  <<: *defaults
+  hostname: kandor
+  box: "centos/6"
+  private_networks:
+    - 172.168.75.53
+  provisions:
+    - "./bootstraps/centos/bootstrap.sh"
+    - "./bootstraps/centos/bootstrap-st2.sh"
