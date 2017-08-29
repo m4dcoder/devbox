@@ -1,8 +1,10 @@
 # Download vagrant boxes
+vagrant box add ubuntu/xenial64		# requires vagrant >= 1.9.1
 vagrant box add ubuntu/trusty64
 vagrant box add centos/7
+vagrant box add centos/6
 
-# Install virtualbox guest additions
+# Install/upgrade virtualbox guest additions on the box
 sudo mkdir -p /media/VirtualBoxGuestAdditions
 sudo mount -t iso9660 -o loop /vagrant/VBoxGuestAdditions.iso /media/VirtualBoxGuestAdditions/
 sudo /media/VirtualBoxGuestAdditions/VBoxLinuxAdditions.run
