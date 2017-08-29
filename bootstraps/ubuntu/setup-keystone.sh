@@ -6,6 +6,7 @@ INSTALL_DIR=/opt/openstack
 INSTALL_PATH=/opt/openstack/keystone
 CLIENT_INSTALL_PATH=/opt/openstack/python-openstackclient
 VENV_PATH=${INSTALL_PATH}/.venv
+ADMIN_PASSWORD=secrete
 
 sudo mkdir -p ${INSTALL_DIR}
 sudo chown -R vagrant:vagrant ${INSTALL_DIR}
@@ -68,9 +69,19 @@ sudo -u postgres psql -c "CREATE USER ${DB_USER} WITH ENCRYPTED PASSWORD '${DB_P
 sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};"
 sudo ${INSTALL_PATH}/.venv/bin/keystone-manage --config-file ${CONFIG_FILE} db_sync
 
+# Setup keys.
+sudo rm -rf /etc/keystone/fernet-keys
+sudo rm -rf /etc/keystone/credential-keys
+sudo ${INSTALL_PATH}/.venv/bin/keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+sudo ${INSTALL_PATH}/.venv/bin/keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+# Bootstrap credentials.
+sudo ${INSTALL_PATH}/.venv/bin/keystone-manage bootstrap --bootstrap-password ${ADMIN_PASSWORD} --bootstrap-admin-url http://localhost:35357/v3/ --bootstrap-internal-url http://localhost:5000/v3/ --bootstrap-public-url http://localhost:5000/v3/ --bootstrap-region-id RegionOne
+
 # Configure apache.
 sudo apt-get -y install apache2 libapache2-mod-wsgi
 echo "manual" | sudo tee /etc/init/apache2.override > /dev/null
+sudo a2enmod ssl
 
 sudo rm /etc/apache2/sites-enabled/000-default.conf || true 
 
@@ -105,6 +116,7 @@ Listen 35357
     WSGIApplicationGroup %{GLOBAL}
     WSGIPassAuthorization On
     LimitRequestBody 114688
+
     <IfVersion >= 2.4>
       ErrorLogFormat "%{cu}t %M"
     </IfVersion>
@@ -129,6 +141,7 @@ Listen 35357
     WSGIApplicationGroup %{GLOBAL}
     WSGIPassAuthorization On
     LimitRequestBody 114688
+
     <IfVersion >= 2.4>
       ErrorLogFormat "%{cu}t %M"
     </IfVersion>
@@ -171,30 +184,25 @@ sudo rm /etc/apache2/sites-enabled/keystone.conf || true
 sudo ln -s ${APACHE_KEYSTONE_SITE}  /etc/apache2/sites-enabled/keystone.conf
 sudo service apache2 restart
 
-# Populate keystone database with sample data.
-sudo cp ${INSTALL_PATH}/tools/sample_data.sh ${CONFIG_DIR}
-sudo sed -i -e 's/keystone-manage/\/opt\/openstack\/keystone\/.venv\/bin\/keystone-manage/g' ${CONFIG_DIR}/sample_data.sh
-sudo ${CONFIG_DIR}/sample_data.sh
-
+# Setup client environment.
 KEYSTONERC=${CONFIG_DIR}/keystonerc
 cat <<KEYSTONERC | sudo tee ${KEYSTONERC}
 # openstack client
-export OS_USERNAME=admin
-export OS_PASSWORD=secrete
-export OS_PROJECT_NAME=admin
-export OS_USER_DOMAIN_ID=default
-export OS_PROJECT_DOMAIN_ID=default
 export OS_IDENTITY_API_VERSION=3
-export OS_AUTH_URL=http://localhost:35357/v3
+export OS_AUTH_URL=http://localhost:5000/v3
+export OS_DEFAULT_DOMAIN=default
+export OS_USERNAME=admin
+export OS_PASSWORD=${ADMIN_PASSWORD}
+export OS_PROJECT_NAME=admin
 KEYSTONERC
 
 # Setup mistral.
 sudo cp ${KEYSTONERC} /tmp/keystonerc
 sudo chown vagrant:vagrant /tmp/keystonerc
 source /tmp/keystonerc
-openstack user create mistral --project service --password "m1stral"
-openstack role add --user mistral --project service service
 openstack service create --name=mistral --description="Mistral Workflow Service" workflow
 openstack endpoint create --region RegionOne workflow public "http://localhost:8989"
 openstack endpoint create --region RegionOne workflow admin "http://localhost:8989"
 openstack endpoint create --region RegionOne workflow internal "http://localhost:8989"
+openstack user create mistral --project st2 --password "m1stral"
+openstack role add --user mistral --project st2 admin
