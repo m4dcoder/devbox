@@ -11,6 +11,7 @@ TOOLS="curl htop man manpages screen realpath wget"
 
 apt-get -y update
 apt-get -y dist-upgrade
+apt-get -y install virtualbox-guest-utils
 apt-get -y install ${DEVKIT} ${PYDEVKIT} ${TOOLS}
 apt-get clean all
 apt-get autoremove
