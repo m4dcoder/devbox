@@ -12,6 +12,6 @@ PASSWORD=StackSt0rm
 # Assume BWC_LICENSE_KEY already exported to the environment.
 
 cd /tmp
-curl -sSL -O https://brocade.com/bwc/install/install.sh && chmod +x install.sh
+curl -sSL -O https://stackstorm.com/bwc/install.sh && chmod +x install.sh
 ./install.sh --staging --stable --user=${USERNAME} --password=${PASSWORD} --license=${BWC_LICENSE_KEY}
 usermod -a -G st2packs vagrant

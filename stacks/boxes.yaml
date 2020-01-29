@@ -1,62 +1,80 @@
 ---
 # Defaults can be defined and reused with YAML anchors
 defaults: &defaults
-  memory: 2048
+  memory: 4096
   cpus: 2
   box: "ubuntu/trusty64"
+
 cadmus:
   <<: *defaults
   hostname: cadmus
-  memory: 3072
   box: "ubuntu/xenial64"
+  disk_size: "20GB"
+  ssh:
+    username: "ubuntu"
   private_networks:
-    - 172.168.50.48
+    - 172.168.50.28
   mounts:
-    - "/dock:~/Documents/Dock"
     - "/vagrant:."
   provisions:
     - "./bootstraps/ubuntu/xenial/bootstrap.sh"
     - "./bootstraps/ubuntu/xenial/bootstrap-st2dev.sh"
+  forward_ports:
+    - "514:514:tcp"
+    - "514:514:udp"
+
 arkham:
   <<: *defaults
   hostname: arkham
-  memory: 3072
+  memory: 4096
+  box: "ubuntu/xenial64"
+  disk_size: "40GB"
   private_networks:
-    - 172.168.50.50
-  mounts:
-    - "/dock:~/Documents/Dock"
+    - 172.168.50.38
   provisions:
     - "./bootstraps/ubuntu/trusty/bootstrap.sh"
-    - "./bootstraps/ubuntu/trusty/bootstrap-st2dev.sh"
+
 gotham:
   <<: *defaults
   hostname: gotham
   box: "ubuntu/trusty64"
   private_networks:
-    - 172.168.50.52
+    - 172.168.50.10
   provisions:
     - "./bootstraps/ubuntu/trusty/bootstrap.sh"
+
+blackgate:
+  <<: *defaults
+  hostname: blackgate
+  box: "ubuntu/xenial64"
+  private_networks:
+    - 172.168.50.11
+  provisions:
+    - "./bootstraps/ubuntu/xenial/bootstrap.sh"
+
 metropolis:
   <<: *defaults
   hostname: metropolis
-  box: "ubuntu/xenial64"
+  box: "ubuntu/bionic64"
   private_networks:
-    - 172.168.50.54
+    - 172.168.50.12
   provisions:
     - "./bootstraps/ubuntu/xenial/bootstrap.sh"
+
 krypton:
   <<: *defaults
   hostname: krypton
   box: "centos/7"
   private_networks:
-    - 172.168.50.56
+    - 172.168.50.13
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
+
 kandor:
   <<: *defaults
   hostname: kandor
   box: "centos/6"
   private_networks:
-    - 172.168.50.58
+    - 172.168.50.14
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
