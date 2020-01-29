@@ -55,11 +55,12 @@ module Vagrant
         'memory'    => ENV['memory'] || 2048,
         'cpus'      => ENV['cpus'] || 2,
         'hostname'  => ENV['hostname'] || 'olympus',
-        'box'       => ENV['box'] || 'ubuntu/trusty64',
+        'box'       => ENV['box'] || 'ubuntu/xenial64',
         'sync_type' => ENV['sync_type'] || 'rsync',
         'ssh'       => {
           'pty'           => false,
           'forward_agent' => true,
+          'username'      => ENV['ssh_username'] || 'vagrant'
         },
       }
     end
@@ -98,6 +99,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
   @stack.servers.each do |node, config|
     vagrant.vm.define node do |n|
       n.vm.box            = config['box']
+      n.ssh.username      = config['ssh']['username']
       n.ssh.forward_agent = config['ssh']['forward_agent'] || true
       n.ssh.pty           = config['ssh']['pty'] || false
 
@@ -109,6 +111,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
 
       if config.has_key?('hostname')
         n.vm.hostname = config['hostname'].downcase
+      end
+
+      if config.has_key?('disk_size')
+        n.disksize.size = config['disk_size']
       end
 
       if config.has_key?('private_networks')
@@ -128,6 +134,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
       if config.has_key?('provisions')
         config['provisions'].each do |script|
           n.vm.provision :shell, :path => script
+        end
+      end
+
+      if config.has_key?('forward_ports')
+        config['forward_ports'].each do |port_config|
+          guest_port, host_port, port_type = port_config.split(/:/)
+          n.vm.network :forwarded_port, guest: guest_port, host: host_port, protocol: port_type
         end
       end
 

@@ -6,11 +6,12 @@ if [ `uname` != "Linux" ]; then
 fi
 
 DEVKIT="git git-review build-essential make vim"
-PYDEVKIT="python-pip python-virtualenv python-dev python3-dev python-tox"
-TOOLS="curl htop man manpages screen realpath wget"
+PYDEVKIT="python-virtualenv python-dev python3-dev python-tox"
+TOOLS="curl htop man manpages screen coreutils wget"
 
 apt-get -y update
 apt-get -y dist-upgrade
+apt-get -y install python-pip
 apt-get -y install virtualbox-guest-utils
 apt-get -y install ${DEVKIT} ${PYDEVKIT} ${TOOLS}
 apt-get clean all
