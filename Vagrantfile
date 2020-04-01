@@ -107,6 +107,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |vagrant|
         virtualbox.name   = node.upcase
         virtualbox.memory = config['memory'].to_i
         virtualbox.cpus   = config['cpus'].to_i
+        virtualbox.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
       end
 
       if config.has_key?('hostname')
