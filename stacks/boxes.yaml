@@ -20,7 +20,6 @@ cadmus:
     - "./bootstraps/ubuntu/xenial/bootstrap.sh"
     - "./bootstraps/ubuntu/xenial/bootstrap-st2dev.sh"
   forward_ports:
-    - "514:514:tcp"
     - "514:514:udp"
 
 arkham:
@@ -32,25 +31,29 @@ arkham:
   private_networks:
     - 172.168.50.38
   provisions:
-    - "./bootstraps/ubuntu/trusty/bootstrap.sh"
+    - "./bootstraps/ubuntu/xenial/bootstrap.sh"
 
 gotham:
   <<: *defaults
   hostname: gotham
-  box: "ubuntu/trusty64"
+  box: "ubuntu/xenial64"
+  disk_size: "40GB"
   private_networks:
     - 172.168.50.10
   provisions:
-    - "./bootstraps/ubuntu/trusty/bootstrap.sh"
+    - "./bootstraps/ubuntu/xenial/bootstrap.sh"
 
 blackgate:
   <<: *defaults
   hostname: blackgate
   box: "ubuntu/xenial64"
+  disk_size: "80GB"
   private_networks:
     - 172.168.50.11
   provisions:
     - "./bootstraps/ubuntu/xenial/bootstrap.sh"
+  forward_ports:
+    - "514:514:udp"
 
 metropolis:
   <<: *defaults
@@ -64,9 +67,16 @@ metropolis:
 krypton:
   <<: *defaults
   hostname: krypton
-  box: "centos/7"
+  box: "centos/8"
   private_networks:
     - 172.168.50.13
+
+argo:
+  <<: *defaults
+  hostname: argo
+  box: "centos/7"
+  private_networks:
+    - 172.168.50.14
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
 
@@ -75,6 +85,6 @@ kandor:
   hostname: kandor
   box: "centos/6"
   private_networks:
-    - 172.168.50.14
+    - 172.168.50.15
   provisions:
     - "./bootstraps/centos/bootstrap.sh"
