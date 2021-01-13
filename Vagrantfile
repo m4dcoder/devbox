@@ -1,9 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-## Need to install dotenv in your vagrant environment
-## vagrant plugin install vagrant-dotenv
-REQUIRED_PLUGINS = %w(dotenv deep_merge)
+## Install required vagrant plugins
+REQUIRED_PLUGINS = %w(dotenv deep_merge vagrant-disksize)
 REQUIRED_PLUGINS.each do |plugin|
   unless Vagrant.has_plugin?(plugin) || ARGV[0] == 'plugin' then
     system "vagrant plugin install #{plugin}"

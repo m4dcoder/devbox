@@ -5,6 +5,7 @@ vagrant box add centos/7
 vagrant box add centos/6
 
 # Install/upgrade virtualbox guest additions on the box
-sudo mkdir -p /media/VirtualBoxGuestAdditions
-sudo mount -t iso9660 -o loop /vagrant/VBoxGuestAdditions.iso /media/VirtualBoxGuestAdditions/
-sudo /media/VirtualBoxGuestAdditions/VBoxLinuxAdditions.run
+# The VBoxGuestAdditions.iso is located at /Applications/VirtualBox.app/Contents/MacOS on OSX.
+sudo mkdir -p /media/VBoxGuestAdditions
+sudo mount -t iso9660 -o loop /vagrant/VBoxGuestAdditions.iso /media/VBoxGuestAdditions/
+sudo /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
